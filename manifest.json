@@ -1,0 +1,36 @@
+{
+  "manifest_version": 3,
+  "name": "Marketplace News Monitor",
+  "version": "1.1.0",
+  "description": "Сбор и анализ изменений с новостных страниц Wildberries, Ozon и Яндекс Маркет с LLM-аналитикой",
+  "permissions": [
+    "storage",
+    "alarms",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://dev.wildberries.ru/*",
+    "https://docs.ozon.ru/*",
+    "https://yandex.ru/*",
+    "https://api.openai.com/*",
+    "https://api.deepseek.com/*",
+    "https://openrouter.ai/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "options_page": "settings.html",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}

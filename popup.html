@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Marketplace News Monitor</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <h1 class="header__title">Marketplace News</h1>
+      <div class="header__controls">
+        <button id="refreshBtn" class="btn btn--small" title="Обновить данные">
+          <span class="icon">🔄</span>
+        </button>
+        <button id="settingsBtn" class="btn btn--small" title="Настройки">
+          <span class="icon">⚙️</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Фильтры -->
+    <section class="filters">
+      <div class="filters__row">
+        <label class="filter__label">
+          <span>С:</span>
+          <input type="date" id="dateFrom" class="input input--date">
+        </label>
+        <label class="filter__label">
+          <span>По:</span>
+          <input type="date" id="dateTo" class="input input--date">
+        </label>
+      </div>
+      <div class="filters__row">
+        <label class="checkbox">
+          <input type="checkbox" id="sourceWB" checked>
+          <span>WB</span>
+        </label>
+        <label class="checkbox">
+          <input type="checkbox" id="sourceOzon" checked>
+          <span>Ozon</span>
+        </label>
+        <label class="checkbox">
+          <input type="checkbox" id="sourceYandex" checked>
+          <span>Yandex</span>
+        </label>
+      </div>
+      <div class="filters__row">
+        <button id="applyFilterBtn" class="btn btn--primary" style="flex: 1;">
+          Применить фильтр
+        </button>
+        <button id="resetBtn" class="btn" style="flex: 0 0 auto; padding: 8px 12px;" title="Сбросить все фильтры">
+          🗑️
+        </button>
+      </div>
+    </section>
+
+    <!-- Кнопка LLM-анализа -->
+    <button id="analyzeBtn" class="btn btn--primary btn--full" style="margin-bottom: 12px;">
+      🤖 Анализировать с LLM
+    </button>
+
+    <!-- Сводка -->
+    <section class="summary" id="summary" style="display: none;">
+      <div class="summary__header">
+        <h2 class="summary__title">Сводка за период</h2>
+      </div>
+      <div class="summary__content" id="summaryContent"></div>
+    </section>
+
+    <!-- Список новостей -->
+    <section class="news-list" id="newsList">
+      <div class="news-list__empty" id="emptyState">
+        <div class="empty-state">
+          <span class="empty-state__icon">📰</span>
+          <p class="empty-state__text">Нажмите «Применить фильтр» для загрузки новостей</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Индикатор загрузки -->
+    <div class="loader" id="loader" style="display: none;">
+      <div class="loader__spinner"></div>
+      <p class="loader__text">Загрузка данных...</p>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
