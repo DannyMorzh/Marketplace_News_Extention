@@ -1,0 +1,4 @@
+# Игнорировать настройки с ключами
+settings.local.json
+.env
+*.local
