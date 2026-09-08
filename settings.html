@@ -80,6 +80,10 @@
       margin-top: 4px;
     }
 
+    .help-text a {
+      color: var(--color-primary);
+    }
+
     .checkbox-group {
       display: flex;
       align-items: center;
@@ -89,6 +93,11 @@
     .checkbox-group input[type="checkbox"] {
       width: 18px;
       height: 18px;
+    }
+
+    .checkbox-group label {
+      margin-bottom: 0;
+      cursor: pointer;
     }
 
     .btn {
@@ -167,13 +176,13 @@
   <h1>⚙️ Настройки Marketplace News Monitor</h1>
 
   <div class="settings-card">
-    <h2>🔑 API ключ OpenAI</h2>
+    <h2>🔑 API ключ Google Gemini</h2>
     <div class="form-group">
       <label for="apiKey">API Key</label>
-      <input type="password" id="apiKey" placeholder="sk-...">
+      <input type="password" id="apiKey" placeholder="AIza... или AQ.Ab...">
       <p class="help-text">
-        Используется DeepSeek API для анализа изменений. 
-        <a href="https://platform.deepseek.com/api_keys" target="_blank">Получить ключ DeepSeek</a>
+        Используется бесплатная модель Gemini 2.0 Flash. 
+        <a href="https://aistudio.google.com/apikey" target="_blank">Получить ключ</a>
       </p>
     </div>
     <button class="btn btn-primary" id="saveApiKey">Сохранить</button>
