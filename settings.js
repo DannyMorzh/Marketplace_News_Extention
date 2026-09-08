@@ -74,18 +74,17 @@ async function testConnection() {
     return;
   }
   
-  showStatus('⏳ Проверяю подключение к OpenRouter...', 'info');
+  showStatus('⏳ Проверяю подключение к Google Gemini...', 'info');
   
   try {
-    const response = await fetch('https://openrouter.ai/api/v1/auth/key', {
-      headers: {
-        'Authorization': `Bearer ${apiKey}`
-      }
-    });
+    const response = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models?key=${apiKey}`
+    );
     
     if (response.ok) {
       const data = await response.json();
-      showStatus(`✅ Подключено! Кредитов: $${data.data?.credits || 'N/A'}`, 'success');
+      const modelCount = data.models?.length || 0;
+      showStatus(`✅ Подключено! Доступно моделей: ${modelCount}`, 'success');
     } else {
       const error = await response.json().catch(() => ({}));
       showStatus(`❌ Ошибка: ${error.error?.message || 'Неверный ключ'}`, 'error');
