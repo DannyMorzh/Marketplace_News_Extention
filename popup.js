@@ -63,6 +63,20 @@ document.addEventListener('DOMContentLoaded', async () => {
     renderNews(state.filteredNews);
     generateSummary(state.filteredNews);
   }
+  
+  // Восстанавливаем LLM-анализ, если он был
+  const savedAnalysis = await chrome.storage.local.get(['lastLlmAnalysis', 'lastAnalyzedNews']);
+  
+  if (savedAnalysis.lastLlmAnalysis && savedAnalysis.lastAnalyzedNews) {
+    const savedNewsJson = JSON.stringify(savedAnalysis.lastAnalyzedNews);
+    const currentNewsJson = JSON.stringify(state.filteredNews);
+    
+    if (savedNewsJson === currentNewsJson) {
+      state.llmAnalysis = savedAnalysis.lastLlmAnalysis;
+      renderLLMAnalysis(state.llmAnalysis);
+      console.log('LLM-анализ восстановлен из storage');
+    }
+  }
 });
 
 // ==========================================
@@ -138,6 +152,8 @@ async function resetAll() {
   elements.summary.style.display = 'none';
   
   await chrome.storage.local.set({ lastFilteredNews: [] });
+  await chrome.storage.local.remove('lastLlmAnalysis');
+  await chrome.storage.local.remove('lastAnalyzedNews');
   await saveFilterState();
   
   showToast('🔄 Фильтры сброшены');
@@ -217,6 +233,10 @@ async function applyFilter() {
   
   state.filteredNews = allNews;
   state.llmAnalysis = null;
+  
+  // Удаляем старый анализ
+  await chrome.storage.local.remove('lastLlmAnalysis');
+  await chrome.storage.local.remove('lastAnalyzedNews');
   
   await chrome.storage.local.set({ lastFilteredNews: allNews });
   
@@ -353,6 +373,13 @@ async function runLLMAnalysis() {
     }
     
     state.llmAnalysis = response;
+    
+    // Сохраняем анализ в storage
+    await chrome.storage.local.set({ 
+      lastLlmAnalysis: response,
+      lastAnalyzedNews: state.filteredNews
+    });
+    
     renderLLMAnalysis(response);
     
     btn.textContent = '✅ Анализ готов';
